@@ -1,0 +1,389 @@
+1、ClassLoader如何加载class
+答：java里有多个类加载，每个类加载负责加载特定位置的类，
+bootstrap类加载负责加载jre/lib/rt.jar中的类，我们平时用的jdk中的类都位于rt.jar中的类，我们平时用的jdk中的类都位于rt
+extclassloader负责加载jre/lib/ext/*.jar中的类
+appclassloader负责classpath指定的目录或jar中的类。
+除了bootstrap之外，其他的类加载器本身也是java类，它们的父类是ClassLoader
+
+2、面向对象的特征有哪些方面？
+答：计算机软件系统是现实生活中的业务在计算机中的映射，而现实生活中的业务其实就是
+一个个对象协作的过程。面向对象编程就是按现实业务一样的方式将程序代码按一个个对象
+进行组织和编写，让计算机系统能够识别和理解用对象方式组织和编写的程序代码，这样就
+可以把现实生活中的业务对象映射到计算机系统中。
+面向对象的编程语言有封装、继承、抽象、多态等4个主要的特征。
+（1）封装
+封装是保证软件部件具有优良的模块性的基础，封装的目标就是要实现软件部件的“高内聚、
+低耦合”，防止程序相互依赖性而带来的变动影响。在面向对象的编程语言中，对象是封装
+的基本单位，面向对象的封装就是把描述一个对象的属性和行为的代码封装在一个“模块”中，
+也就是一个类中，属性用变量定义，行为用方法进行定义，方法可以直接访问同一个对象中
+的属性。通常情况下，只要记住让变量和访问这个变量的方法放在一起，将一个类中的成员
+变量全部定义成私有的，只要这个类自己的方法才可以访问到这些成员变量，这就基本上
+实现对象的封装。
+（2）抽象
+抽象就是找出一些事物的相似和共性之处，然后将这些事物归为一个类，这个类只考虑这些
+事物的相似和共性之处，并且会忽略与当前主题和目标无关的那些方面，将注意力集中在与
+当前目标有关的方面。
+（3）继承
+在定义和实现一个类的时候，可以在一个已经存在的类的基础之上来进行，把这个已经存在
+的类所定义的内容作为自己的内容，并可以加入若干新的内容，或修改原来的方法使之更
+适合特殊的需要，这就是继承。继承是子类自动共享父类数据和方法的机制，这是类之间的
+一种关系，提供了软件的的可重用性和可扩展性。
+（4）多态
+多态是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程
+时并不确定，而是在程序运行期间才确定即一个引用变量到底会指向哪个类的实例对象，
+该引用变量发出的方法调用到底是哪个类中实现的方法，必须在程序运行期间才能决定。
+因为在程序运行时才确定具体的类，这样，不用修改源程序代码，就可以让引用变量绑定到
+各种不同的类实现上，从而导致该引用调用的具体方法随之改变，即不修改程序代码就可以
+改变程序运行时绑定的具体代码，让程序可以选择多个运行状态，这就是多态性。多态性
+增强了软件的灵活性和扩展性。
+
+3、java中实现多态的机制是什么？
+答：靠的是父类或接口定义的引用变量可以指向子类或具体实现类的实例对象，而程序调用的方法
+在运行期才动态绑定，就是引用变量所指向的具体实现对象的方法，也就是内存里正在运行的
+那个对象的方法，而不是引用变量的类型中定义的方法。
+
+4、所谓AOP，即Aspect orientied program，就是面向方面的编程
+方面：贯穿到系统的各个模块中的系统一个功能就是一个方面，比如，记录日志，统一异常处理，
+事务处理权限检查，这些功能都是软件系统的一个面，而不是一个点，在各个模块中都要出现。
+
+面向方面编程：把系统的一个方面的功能封装成对象的形式来处理
+
+怎么进行方面编程：把功能模块对应的对象作为切面嵌入到原来的各个系统模块中，采用代理技术，
+代理会调用目标，同时把切面功能的代码（对象）加入进来，所以，用Spring配置代理对象时只要
+配两个属性，分别表示目标和切面对象（Advisor）
+
+5、short s1 = 1;s1 = s1 + 1;有什么错？short s1 = 1; s1 += 1;有什么错？
+答：对于short s1 = 1;s1 = s1 + 1，由于s1 + 1运算时会自动提升表达式的类型，所以结果是int型，
+再赋值给short类型s1时，编译器将报告需要强制类型转换的错误。
+对于short s1 = 1; s1 += 1;由于+=是java语言规定的运算符，java编译器会对它进行特殊处理，
+因此可以正确编译。
+
+6、abstract class和interface有什么区别？
+答：含有abstract修饰符的class即为抽象类，abstract类不能创建实例对象，含有abstract方法的
+类必须定义为abstract class，abstract class类中的方法不必是抽象的。abstract class类中定义
+抽象方法必须在子类中实现，如果子类没有实现抽象父类中的所有抽象方法，那么子类也必须定义为
+abstract类型。
+接口（interface）可以说成是抽象类的一种特例，接口中的所有方法都必须是抽象的。接口中的方法
+定义默认为public abstract类型，接口中的成员变量类型默认为public static final。
+
+下面比较一下两者的语法区别：
+1）抽象类可以有构造方法，接口中不能有构造方法。
+2）抽象类中可以有普通成员变量，接口中没有普通成员变量。
+3）抽象类中可以包含非抽象类的普通方法，接口中的所有方法必须都是抽象的，不能有非抽象的普通
+方法。
+4）抽象类中的抽象方法的访问类型可以是public、protected，但接口中的抽象方法只能是public，
+并且默认为public abstract类型。
+5）抽象类中可以包含静态方法，接口中不能包含静态方法。
+6）抽象类和接口中都可以包含静态成员变量，抽象类中的静态成员变量的访问类型可以任意，但接口
+中定义的变量只能是public static final类型，并且默认为public static final类型。
+7）一个类可以多个接口，但只能继承一个抽象类。
+
+下面接着再说说两者在应用上的区别：
+接口更多的是在系统架构设计方法发挥作用，主要用于定义模块之间的通信契约，而抽象类在代码实现
+方面发挥作用，可以实现代码的重用，例如，模板方法设计模式是抽象类的一个典型应用，假设某个
+项目的所有Servlet类都要用相同的方式进行权限判断、记录访问日志和处理异常，那么就可以定义一个
+抽象的基类，让所有的Servlet都继承这个抽象基类，在抽象基类的service方法中完成权限判断、记录
+访问日志和处理异常的代码，在各个子类中只是完成各自的业务逻辑代码，伪代码如下：
+public abstract class BaseServlet extends HttpServlet {
+	public final void service(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
+		// 记录访问日志
+		// 进行权限判断
+		if (具有权限) {
+			try {
+				doService(request, response);
+			} catch(Exception e) {
+				// 记录异常信息
+			}
+		}
+	}
+}
+
+7、StringBuffer与StringBuilder的区别
+答：StringBuffer和StringBuilder类都表示内容可以被修改的字符串，StringBuilder是线程不安全的，
+运行效率高，如果一个字符串变量是在方法里面定义，这种情况只能有一个线程访问它，不存在不安全
+的因素了，则用StringBuilder。如果要在类里面定义成员变量，并且这个类的实例对象会在多线程下
+环境使用，那么最好用StringBuffer。
+
+8、final，finally，finalize的区别
+答：final用于声明属性、方法和类，分别表示属性不可变，方法不可覆盖，类不可继承。
+内部类要访问局部变量，局部变量要定义成final类型。
+finally是异常处理语句结构的一部分，表示总是执行。
+finalize是Object类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法，可以覆盖此
+方法提供垃圾收集时的其他资源回收，例如关闭文件等，JVM不保证此方法总被调用。
+
+9、java中有几种方法可以实现一个线程？用什么关键字修饰同步方法？stop()和suspend()方法为何
+不推荐使用？
+答：jdk5以前，有如下两种：
+第一种：
+new Thread() {
+	public void run() {
+		// 线程执行的代码
+	}
+}.start();
+第二种：
+new Thread(new Runnable() {
+	public void run() {
+		// 线程执行的代码
+	}
+}).start();
+从java5开始，还有如下一些线程池创建多线程的方式：
+ExecutorService pool = Executors.newFixedThreadPool(3);
+for (int i = 0; i < 10; i++) {
+	pool.execute(new Runnable() {
+		public void run() {
+			// 线程执行的代码
+		}
+	});
+}
+Executors.newCachedThreadPool().execute(new Runnable() {
+	public void run() {
+		// 线程要执行的代码
+	}
+});
+Executors.newSingleThreadExecutor().execute(new Runnable() {
+	public void run() {
+		// 线程要执行的代码
+	}
+});
+
+用synchronized关键字修饰同步方法
+
+反对使用stop()，是因为它不安全，它会解除由线程获取的所有锁定，而且如果对象处于一种不连贯状态，
+那么其他线程能在那种状态下检查和修改它们，结果很难检查出真正的问题所在。
+suspend()方法容易发生死锁。调用suspend()的时候，目标线程会停下来，但却仍然持有在这之前获得的
+锁定。此时，其他任何线程都不能访问锁定的资源，除非被“挂起”的线程恢复运行。对任何线程来说，
+如果它们想恢复目标线程，同时又试图使用任何一个锁定的资源，就会造成死锁。所以不应该使用suspend()
+而应在自己的Thread类中置入一个标志，指出线程应该活动还是挂起。若标志指出线程应该挂起，使用wait()
+命其进入等待状态。若标志指出线程应该恢复，则用一个notify()重新启动线程。
+
+10、sleep()和wait()有什么区别？
+答：sleep是线程类（Thread）的方法，导致此线程暂停执行指定时间，给执行机会给其它线程，但是监控状态
+依然保持，到时后会自动恢复。调用sleep不会释放对象锁。wait是Object类的方法，对此对象调用wait方法
+导致本线程放弃对象锁，进入等待此对象的等待锁定池，只有针对此对象发出notify方法（或notifyAll）后
+本线程才进入对象锁定池准备获得对象锁进入运行状态。
+sleep就是正在执行的线程主动让出CPU，CPU去执行其他线程，在sleep指定的时间过后，CPU才会回到这个线程
+上继续往下执行，如果当前线程进入了同步锁，sleep方法并不会释放锁，即使当前线程使用sleep方法让出了
+CPU，但其他被同步锁挡住了的线程也无法得到执行。
+wait是指在一个已经进入了同步锁的线程内，让自己暂时让出同步锁，以便其他正在等待此锁的线程可以得到
+同步锁并运行，只有其他线程调用了notify方法（notify并不释放锁，只是告诉调用过wait方法的线程可以去
+参与获得锁的竞争了，但不是马上得到锁，因为所还在别人手里，别人还没释放。如果notify方法后面的代码
+还有很多，需要这些代码执行完后才会释放锁，可以在notify方法后增加一个等待和一些代码，看看效果），
+调用wait方法的线程就会解除wait状态和程序可以再次得到锁后继续向下运行。
+
+11、简述synchronized和java.util.concurrent.locks.Lock的异同
+答：主要相同点：Lock能完成synchronized所实现的所有功能
+主要不同点：Lock有比synchronized更精确的线程语义和更好的性能。synchronized会自动释放锁，而Lock一定
+要求程序员手工释放，并且必须在finally中释放。Lock还有更强大的功能，例如，它的tryLock方法可以非阻塞
+方式去拿锁。
+package com.huwei.interview;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ThreadTest {
+	private int j;
+	private Lock lock = new ReentrantLock();
+	public static void main(String[] args) {
+		ThreadTest tt = new ThreadTest();
+		for (int i = 0; i < 2; i++) {
+			new Thread(tt.new Adder()).start();
+			new Thread(tt.new Subtractor()).start();
+		}
+	}
+	
+	private class Subtractor implements Runnable {
+		public void run() {
+			while (true) {
+				lock.lock();
+				try {
+					System.out.println("j--=" + j--);
+				} finally {
+					lock.unlock();
+				}
+			}
+		}
+	}
+	
+	private class Adder implements Runnable {
+		public void run() {
+			while (true) {
+				lock.lock();
+				try {
+					System.out.println("j++=" + j++);
+				} finally {
+					lock.unlock();
+				}
+			}
+		}
+	}
+}
+
+12、线程的基本概念、线程的基本状态以及状态之间的关系
+答：一个程序中可以有多条执行线索同时执行，一个线程就是程序中的一条执行线索，每个线程上都关联有要执行
+的代码，即可以有多段程序代码同时运行，每个程序至少都有一个线程，即main方法执行的那个线程。如果只是一个
+cpu，它怎么能够同时执行多段程序呢？这是从宏观上来看的，cpu一会执行a线索，一会执行b线索，切换时间很快，
+给人的感觉是a，b在同时执行。
+状态：就绪，运行，synchronized阻塞，wait和sleep挂起，结束。wait必须在synchronized内部调用。
+调用线程的start方法后线程进入就绪状态，线程调度系统将就绪状态的线程转为运行状态，遇到synchronized语句
+时，由运行状态转为阻塞，当synchronized获得锁后，由阻塞转为运行，这种情况可以调用wait方法转为挂起状态，
+当线程关联的代码执行完后，线程变为结束状态。
+
+13、ArrayList和Vector的区别
+答：这两个类都实现了List接口（List接口继承了Collection接口），它们都是有序集合，即存储在这两个集合中
+的元素的位置都是有顺序，相当于一种动态的数组，我们以后可以按位置索引号取出某个元素，并且其中的数据是
+允许重复的，这是HashSet之类的集合的最大不同处，HashSet之类的集合不可以按索引号去检索其中的元素，也不
+允许有重复的元素。
+ArrayList与Vector的区别，主要包括两个方面：
+（1）同步性
+Vector是线程安全的，也就是说它的方法之间是线程同步的，而ArrayList是线程不安全的，它的方法之间是线程
+不同步的。如果只有一个线程会访问到集合，那最好是使用ArrayList，因为它不考虑线程安全，效率会高些；如果
+有多个线程会访问到集合，那最好是使用Vector，因为不需要我们自己再去考虑和编写线程安全的代码。
+（2）数据增长
+ArrayList与Vector都有一个初始的容量大小，当存储进它们里面的元素的个数超过了容量时，就需要增加ArrayList
+与Vector的存储空间，每次要增加存储空间时，不是只增加一个存储单元，而是增加多个存储单元，每次增加的存储
+单元的个数在内存空间利用与程序效率之间要取得一定的平衡。Vector默认增长为原来两倍，而ArrayList的增长策略
+在文档中没有明确规定（从源代码看到的是增长为原来的1.5倍）。ArrayList与Vector都可以设置初始的空间大小，
+Vector还可以设置增长的空间大小，而ArrayList没有提供设置增长空间的方法。
+                                                                                                                                                                               
+14、HashMap与Hashtable的区别
+答：HashMap是Hashtable的轻量级实现（非线程安全的实现），它们都实现了Map接口，主要区别在于HashMap允许空
+（null）键值（key），由于非线程安全，在只有一个线程访问的情况下，效率要高于Hashtable。
+HashMap允许将null作为一个entry的key，而Hashtable不允许。
+HashMap把Hashtable的contains方法去掉了，改成containsValue和containsKey。因为contains方法容易让人引起误解。
+Hashtable继承自Dictionary类，而HashMap是Java1.2引进的Map接口的一个实现。
+最大的不同是，Hashtable的方法是synchronized的，而HashMap不是，在多个线程访问Hashtable时，不需要自己为它
+的方法实现同步，而HashMap就必须为之提供同步。
+Hashtable和HashMap采用的hash/rehash算法都大概一样，所以性能不会有很大的差异。
+
+就HashMap与Hashtable主要从三方面来说
+一、历史原因：Hashtable是基于陈旧的Dictionary类的，HashMap是Java1.2引进的Map接口的一个实现。
+二、同步性：Hashtable是线程安全的，也就是说是同步的，而HashMap是线程不安全的，不是同步的。
+三、值：只有HashMap可以让你将空值作为一个表的条目的key或value。
+
+15、什么是java序列化，如何实现java序列化？或者请解释Serializable接口的作用
+答：我们有时候将一个java对象变成字节流的形式传出去或者从一个字节流中恢复成一个java对象，例如，要将java
+对象存储到硬盘或者传送给网络上的其他计算机，这个过程我们可以自己写代码去把一个java对象变成某个格式的字节
+流再传输，但是，jre本身提供了这种支持，我们可以调用OutputStream的writeObject方法来做，如果要让java帮我们
+做，要被传输的对象必须实现serializable接口，这样，javac编译时就会进行特殊处理，编译的类才可以被writeObject
+方法操作，这就是所谓的序列化。需要被序列化的类必须实现Serializable接口，该接口是一个mini接口，其中没有需要
+实现的方法，实现Serializable只是为了标注该对象是可被序列化的。
+
+16、heap和stack有什么区别
+答：java的内存分为两类，一类是栈内存，一类是堆内存。栈内存是指程序进入一个方法时，会为这个方法单独分配一块
+私属存储空间，用于存储这个方法内部的局部变量，当这个方法结束，分配给这个方法的栈会释放，这个栈中的变量也将
+随之释放。
+堆是与栈作用不同的内存，一般用于存放不放在栈中的那些数据，例如，使用new创建的对象都放在堆里，所以，它不会
+随方法的结束而消失。方法中的局部变量使用final修饰后，放在堆中，而不是栈中。
+
+17、GC是什么？为什么要有GC？
+答：GC是垃圾收集的意思（Gabage Collection），内存处理是编程人员容易出现问题的地方，忘记或者错误的内存回收会导致
+程序或系统的不稳定甚至崩溃，Java提供的GC功能可以自动监测对象是否超过作用域从而达到自动回收的目的，Java语言
+没有提供释放已分配内存的显示操作方法。
+
+18、垃圾回收的优点和原理。并考虑2中回收机制。
+答：Java语言中一个显著的特点就是引入了垃圾回收机制，使C++程序员最头疼的内存管理的问题迎刃而解，它使得Java
+程序员在编写程序的时候不再需要考虑内存管理。由于有个垃圾回收机制，Java中的对象不再有“作用域”的概念，只有
+对象的引用才有“作用域”。垃圾回收可以有效的防止内存泄露，有效的使用可以使用的内存。垃圾回收器通常示作为一个
+单独的低级别的线程运行，不可预知的情况下对内存堆中已经死亡的或者长时间没有使用的对象进行清除和回收，程序员
+不能实时的调用垃圾回收器对某个对象进行垃圾回收。回收机制有分代复制垃圾回收、标记垃圾回收和增量垃圾回收。
+
+19、垃圾回收器的基本原理是什么？垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？
+答：对于GC来说，当程序员创建对象时，GC就开始监控这个对象的地址、大小以及使用情况。通常，GC采用有向图的方式
+记录和管理堆（heap）中的所有对象。通过这种方式确定哪些对象是“可达的”，哪些对象是“不可达的”。当GC确定一些对象
+为“不可达”时，GC就有责任回收这些内存空间。程序可以手动执行System.gc()，通知GC运行，但是Java语言规范并不保证
+GC一定会执行。
+
+20、java中会存在内存泄露吗，请简单描述。
+答：所谓内存泄露就是指一个不再被程序使用的对象或变量一直被占据在内存中。java中有垃圾回收机制，它可以保证一
+对象不再被引用的时候，即对象变成了孤儿的时候，对象将自动被垃圾回收器从内存中清除掉。由于Java使用有向图的方式
+进行垃圾回收管理，可以消除引用循环的问题，例如有两个对象，相互引用，只要它们和根进程不可达的，那么GC也是可以
+回收它们的。
+
+java中的内存泄露的情况：长声明周期的对象持有短生命周期对象的引用就很可能发生内存泄露，尽管短声明周期对象已经
+不再需要，但是因为长生命周期对象持有它的引用而导致不能被回收，这就是java中内存泄露的发生场景，通俗地说，就是
+程序员可能创建了一个对象，以后一直不再使用这个对象，这个对象却一直被引用，即这个对象无用但是却无法被垃圾回收器
+回收的，这就是java中可能出现内存泄露的情况，例如，缓存系统，我们加载了一个对象放在缓存中（例如放在一个全局的map
+对象中），然后一直不再使用它，这个对象一直被缓存引用，但却不再被使用。
+检查java中的内存泄露，一定要让程序将各种分支情况都完整执行到程序结束，然后看某个对象是否被使用过，如果没有，则
+才能判定这个对象属于内存泄露。
+
+如果一个外部类的实例对象的方法返回了一个内部类的实例对象，这个内部类对象被长期引用了，即使那个外部类实例对象不再
+被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄露。
+
+内存泄露的另外一种情况：当一个对象被存储进HashSet集合中以后，就不能修改这个对象中的那些参与计算哈希值的字段了，
+否则，对象修改后的哈希值与最初存储进HashSet集合中时的哈希值就不同了，在这种情况下，即使在contains方法使用该对象的
+当前引用作为的参数去HashSet集合中检索对象，也将返回找不到对象的结果。这也会导致无法从HashSet中单独删除当前对象，
+造成内存泄露。
+
+21、写一个Singleton出来。
+答：
+第一种：饱汉模式
+public class Singleton() {
+	private Singleton() {}
+	// 实例化放在静态代码块里可提高程序的执行效率，但也可能更占用空间
+	private final static Singleton instance = new Singleton();
+	public static Singleton getInstance() {
+		return instance;
+	}
+}
+第二种：饿汉模式
+private class Singleton() {
+	private Singleton() {};
+	private static instance = null;
+	public static synchronized Singleton getInstance() {
+		if (instance == null) {
+			instance = new Singleton();
+		}
+		return instance;
+	}
+}
+第三种：用枚举
+public enum Singleton() {
+	ONE;
+}
+
+22、排序都有哪几种方法？请列举。用JAVA实现一个快速排序。
+答：本人只研究过冒泡排序、选择排序和快速排序，下面是快速排序的代码：
+public class QuickSort {
+	public void quick(int arr[]) {
+		if (arr.length > 0) {
+			quickSort(arr, 0, arr.length);
+		}
+	}
+	
+	private void quickSort(int[] arr, int low, int high) {
+		if (low < high) {
+			int middle = getMiddle(arr, low, high);
+			quickSort(arr, low, middle - 1);  // 从左表进行
+			quickSort(arr, middle + 1, high); // 从右表进行
+		}
+	}
+	
+	private int getMiddle(int[] arr, int low, int high) {
+		int tmp = arr[low];
+		while (low < high) {
+			while (low < high && arr[high] >= tmp) {
+				high--;
+			}
+			arr[low] = arr[high];
+			while (low < high && arr[low] <= tmp) {
+				low++;
+			}
+			arr[high] = arr[low];
+		}
+		arr[low] = tmp;
+		return low;
+	}
+	
+	public static void main(String[] args) {
+		int[] arr = {11, 66, 22, 0, 55, 22, 0, 32};
+		QuickSort sort = new QuickSort();
+		sort.quick(arr);
+		Arrays.toString(arr);
+	}
+}
+
+23、maven几个服务器之间的关系
+
+24、spring的bean的生命周期
+
+25、怎么定位java内存泄露的问题
